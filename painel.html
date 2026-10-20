@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090c">
+  <meta name="description" content="Painel de demonstração Tobi Hack.">
+  <title>aimbot vip @TOBI.HACK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Tobi Hack início">
+        <span class="brand-mark">T</span><span><b>TOBI<span class="accent">.</span>HACK</b><small>CONTROL CENTER</small></span>
+      </a>
+      <div class="profile">
+        <div class="avatar">TH</div><div><strong>@TOBI.HACK</strong><small>PAINEL VIP</small></div>
+        <span class="online-dot" title="Interface local"></span>
+      </div>
+      <p class="nav-label">MENU PRINCIPAL</p>
+      <nav class="nav-tabs" aria-label="Navegação do painel">
+        <button class="nav-tab active" data-tab="aimbot"><span class="nav-icon">◎</span><span>Aimbot</span><span class="nav-arrow">›</span></button>
+        <button class="nav-tab" data-tab="optimization"><span class="nav-icon">ϟ</span><span>Otimização</span><span class="nav-arrow">›</span></button>
+        <button class="nav-tab" data-tab="injector"><span class="nav-icon">▣</span><span>Injector</span><span class="nav-arrow">›</span></button>
+        <button class="nav-tab" data-tab="sensitivity"><span class="nav-icon">☷</span><span>Sensibilidade</span><span class="nav-arrow">›</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="status-card"><span class="status-pulse"></span><div><b>INTERFACE ONLINE</b><small>Modo de demonstração</small></div></div>
+        <div class="version">TOBI HACK <span>v1.0.0</span></div>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>TOBI HACK</span><span class="crumb-slash">/</span><b id="currentSection">AIMBOT</b></div>
+        <div class="top-actions"><span class="live-pill"><i></i> LOCAL</span><button class="icon-button" id="resetAll" title="Restaurar padrões" aria-label="Restaurar padrões">↻</button></div>
+      </header>
+
+      <div class="content">
+        <section class="page active" id="page-aimbot">
+          <div class="page-heading"><div><div class="eyebrow"><span></span> CONFIGURAÇÕES DE MIRA</div><h1>Aimbot <span>VIP</span></h1><p>Personalize os controles da sua interface.</p></div><div class="heading-tag"> <span>✦</span> PREMIUM UI</div></div>
+          <div class="feature-grid">
+            <article class="panel settings-panel">
+              <div class="panel-heading"><div><span class="panel-kicker">MÓDULO 01</span><h2>Assistência de mira</h2></div><span class="panel-symbol">◎</span></div>
+              <div class="setting-row"><div class="setting-copy"><b>Aimbot Legit</b><small>Assistência suave de mira</small></div><label class="switch"><input type="checkbox" data-setting="aimbot" checked><span class="switch-track"></span></label></div>
+              <div class="setting-row"><div class="setting-copy"><b>Precision</b><small>Ajuste de precisão demonstrativo</small></div><label class="switch"><input type="checkbox" data-setting="precision"><span class="switch-track"></span></label></div>
+              <div class="setting-row"><div class="setting-copy"><b>Recoil Control</b><small>Controle visual de recuo</small></div><label class="switch"><input type="checkbox" data-setting="recoil"><span class="switch-track"></span></label></div>
+              <div class="notice"><span>ⓘ</span><p>Controles demonstrativos de interface. Nenhuma alteração é feita no jogo.</p></div>
+            </article>
+            <article class="panel fov-panel">
+              <div class="panel-heading"><div><span class="panel-kicker">MÓDULO 02</span><h2>Campo de visão</h2></div><span class="panel-symbol">⌖</span></div>
+              <div class="fov-visual"><div class="fov-ring ring-outer"></div><div class="fov-ring ring-inner"></div><div class="fov-cross horizontal"></div><div class="fov-cross vertical"></div><span class="fov-center"></span></div>
+              <div class="slider-label"><label for="fov">FOV SIZE</label><strong><span id="fovValue">45</span><small>%</small></strong></div>
+              <input class="range" id="fov" type="range" min="1" max="100" value="45">
+              <div class="range-ends"><span>PEQUENO</span><span>GRANDE</span></div>
+              <div class="mini-stats"><div><small>STATUS</small><b id="aimStatus">ATIVO</b></div><div><small>PERFIL</small><b>PERSONALIZADO</b></div></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="page" id="page-optimization">
+          <div class="page-heading"><div><div class="eyebrow"><span></span> AJUSTES DO SISTEMA</div><h1>Otimização <span>PRO</span></h1><p>Opções visuais de desempenho e manutenção.</p></div><div class="heading-tag"><span>ϟ</span> PERFORMANCE</div></div>
+          <article class="panel full-panel"><div class="panel-heading"><div><span class="panel-kicker">CONFIGURAÇÕES</span><h2>Desempenho</h2></div><span class="panel-symbol">ϟ</span></div>
+            <div class="setting-row"><div class="setting-icon">⌁</div><div class="setting-copy"><b>No Input-Lag</b><small>Opção demonstrativa para reduzir latência de entrada</small></div><label class="switch"><input type="checkbox" data-setting="inputlag" checked><span class="switch-track"></span></label></div>
+            <div class="setting-row"><div class="setting-icon">ϟ</div><div class="setting-copy"><b>FPS Boost</b><small>Preferência visual de desempenho</small></div><label class="switch"><input type="checkbox" data-setting="fps"><span class="switch-track"></span></label></div>
+            <div class="setting-row"><div class="setting-icon">⌫</div><div class="setting-copy"><b>Clear Graphics Drive</b><small>Simulação de limpeza de cache gráfico</small></div><button class="secondary-button" id="clearCache">LIMPAR <span>↗</span></button></div>
+            <div class="notice"><span>ⓘ</span><p>Esta página não altera configurações do Windows, drivers ou do jogo; os controles servem como demonstração.</p></div>
+          </article>
+        </section>
+
+        <section class="page" id="page-injector">
+          <div class="page-heading"><div><div class="eyebrow"><span></span> SELEÇÃO DE PLATAFORMA</div><h1>Game <span>Center</span></h1><p>Selecione uma versão para a demonstração do painel.</p></div><div class="heading-tag"><span>▣</span> GAME MODULE</div></div>
+          <div class="game-grid">
+            <button class="game-card selected" data-game="Free Fire"><span class="game-art ff-art"><span>FF</span></span><span class="game-name">FREE FIRE</span><span class="game-desc">Versão padrão</span><span class="game-select">SELECIONADO <i>✓</i></span></button>
+            <button class="game-card" data-game="Free Fire MAX"><span class="game-art max-art"><span>MAX</span></span><span class="game-name">FREE FIRE MAX</span><span class="game-desc">Versão MAX</span><span class="game-select">SELECIONAR <i>＋</i></span></button>
+          </div>
+          <article class="panel launch-panel"><div class="launch-info"><div class="launch-icon">▣</div><div><span class="panel-kicker">PLATAFORMA SELECIONADA</span><h2 id="selectedGame">Free Fire</h2><p>Interface de seleção — sem execução de processos externos.</p></div></div><button class="primary-button" id="launchDemo">CONFIRMAR SELEÇÃO <span>→</span></button><div class="creator">DESENVOLVIDO POR <b>yzingzz · @TOBI.HACK</b></div></article>
+        </section>
+
+        <section class="page" id="page-sensitivity">
+          <div class="page-heading"><div><div class="eyebrow"><span></span> CONFIGURAÇÃO PERSONALIZADA</div><h1>Sensibilidade <span>LAB</span></h1><p>Monte um perfil e copie os valores gerados.</p></div><div class="heading-tag"><span>☷</span> SENSI BUILDER</div></div>
+          <article class="panel full-panel sensitivity-panel"><div class="panel-heading"><div><span class="panel-kicker">AJUSTES DO PERFIL</span><h2>Controles de sensibilidade</h2></div><span class="panel-symbol">☷</span></div>
+            <div class="sensitivity-list">
+              <div class="sensitivity-control"><div class="slider-label"><label for="general">Geral</label><strong id="generalValue">95</strong></div><input class="range" id="general" type="range" min="0" max="200" value="95"></div>
+              <div class="sensitivity-control"><div class="slider-label"><label for="redDot">Ponto Vermelho</label><strong id="redDotValue">90</strong></div><input class="range" id="redDot" type="range" min="0" max="200" value="90"></div>
+              <div class="sensitivity-control"><div class="slider-label"><label for="scope2">Mira 2x</label><strong id="scope2Value">85</strong></div><input class="range" id="scope2" type="range" min="0" max="200" value="85"></div>
+              <div class="sensitivity-control"><div class="slider-label"><label for="scope4">Mira 4x</label><strong id="scope4Value">75</strong></div><input class="range" id="scope4" type="range" min="0" max="200" value="75"></div>
+              <div class="sensitivity-control"><div class="slider-label"><label for="awm">Mira AWM</label><strong id="awmValue">40</strong></div><input class="range" id="awm" type="range" min="0" max="200" value="40"></div>
+              <div class="sensitivity-control"><div class="slider-label"><label for="freeLook">Câmera Livre</label><strong id="freeLookValue">80</strong></div><input class="range" id="freeLook" type="range" min="0" max="200" value="80"></div>
+            </div>
+            <button class="primary-button generate-button" id="generateSensi">GERAR SENSIBILIDADE <span>✦</span></button>
+            <div class="result-box hidden" id="sensiResult"><div><b>SEU PERFIL</b><small>Valores atuais da configuração</small></div><pre id="sensiOutput"></pre><button class="secondary-button" id="copySensi">COPIAR VALORES <span>▣</span></button></div>
+          </article>
+        </section>
+        <footer class="footer"><span>© 2026 TOBI.HACK</span><span>INTERFACE DEMONSTRATIVA <i></i> FEITA COM CUIDADO</span></footer>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

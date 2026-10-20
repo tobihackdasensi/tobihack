@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tobi Hack — Administração</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<main class="admin-shell">
+  <header class="top">
+    <a class="brand" href="/"><span class="mark">T</span><span>TOBI <b>HACK</b></span></a>
+    <span class="tag">ADMINISTRADOR</span>
+  </header>
+  <section class="panel admin-panel">
+    <div id="login-view">
+      <div class="eyebrow">ACESSO RESTRITO</div>
+      <h1>Gerenciar licenças</h1>
+      <p class="muted">Entre com a senha administrativa configurada no servidor.</p>
+      <form id="admin-login">
+        <label for="admin-password">Senha administrativa</label>
+        <input id="admin-password" type="password" autocomplete="current-password" required>
+        <button type="submit">Entrar <span>↗</span></button>
+        <p class="message" id="admin-msg"></p>
+      </form>
+    </div>
+    <div id="manager-view" hidden>
+      <div class="heading-row">
+        <div><div class="eyebrow">GERENCIAMENTO</div><h1>Criar licença</h1></div>
+        <button class="secondary small" id="logout" type="button">Sair</button>
+      </div>
+      <p class="muted">A validade começa somente na primeira utilização da chave pelo cliente.</p>
+      <form id="create-form">
+        <label for="duration">Duração</label>
+        <select id="duration">
+          <option value="1_week">1 semana — 7 dias</option>
+          <option value="1_month">1 mês — 30 dias</option>
+          <option value="4_months">4 meses — 120 dias</option>
+        </select>
+        <button type="submit">Gerar chave segura <span>＋</span></button>
+      </form>
+      <div id="new-key" class="new-key" hidden>
+        <div class="eyebrow">COPIE AGORA — MOSTRADA UMA ÚNICA VEZ</div>
+        <code id="new-key-value"></code>
+        <button class="secondary" id="copy-key" type="button">Copiar chave</button>
+        <p id="key-expiry" class="muted"></p>
+      </div>
+      <div class="heading-row list-heading">
+        <h2>Licenças</h2><button class="secondary small" id="refresh" type="button">Atualizar</button>
+      </div>
+      <p class="muted tiny">São exibidas até 500 licenças recentes. A chave completa não é guardada no banco. Chaves não utilizadas ainda não têm data de expiração.</p>
+      <div id="licenses" class="licenses"><p class="muted">Carregando…</p></div>
+      <p class="message" id="manager-msg"></p>
+    </div>
+  </section>
+</main>
+<script>
+const $ = selector => document.querySelector(selector);
+async function api(url, options = {}) {
+  const response = await fetch(url, { headers: { 'Content-Type': 'application/json' }, ...options });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || 'Erro na solicitação.');
+  return data;
+}
+function date(ms) { return ms ? new Date(ms).toLocaleString('pt-BR') : '—'; }
+function showManager() { $('#login-view').hidden = true; $('#manager-view').hidden = false; loadLicenses(); }
+async function loadLicenses() {
+  try {
+    const data = await api('/api/admin/licenses');
+    $('#licenses').innerHTML = data.licenses.length ? data.licenses.map(item => `
+      <article class="license-row">
+        <div class="license-main">
+          <strong>Licença #${item.id}</strong>
+          <span class="status ${item.status === 'ativa' ? 'ativa' : item.status === 'expirada' ? 'expirada' : item.status === 'revogada' ? 'revogada' : 'pending'}">${item.status}</span>
+          <small>${item.duration_label} · criada ${date(item.created_at)}</small>
+          <small>${item.activated_at ? `Ativada: ${date(item.activated_at)} · expira: ${date(item.expires_at)}` : 'Ainda não utilizada — prazo não iniciado'}</small>
+          <code>${item.key_preview}</code>
+        </div>
+        ${item.status === 'ativa' || item.status === 'aguardando ativação' ? `<button class="danger small" data-revoke="${item.id}" type="button">Revogar</button>` : ''}
+      </article>`).join('') : '<p class="muted">Nenhuma licença criada ainda.</p>';
+  } catch (error) {
+    $('#manager-msg').textContent = error.message;
+    $('#manager-msg').className = 'message error';
+  }
+}
+$('#admin-login').addEventListener('submit', async event => {
+  event.preventDefault();
+  $('#admin-msg').textContent = 'Verificando…';
+  try {
+    await api('/api/admin/login', { method: 'POST', body: JSON.stringify({ password: $('#admin-password').value }) });
+    showManager();
+  } catch (error) {
+    $('#admin-msg').textContent = error.message;
+    $('#admin-msg').className = 'message error';
+  }
+});
+$('#create-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  try {
+    const data = await api('/api/admin/licenses', { method: 'POST', body: JSON.stringify({ duration: $('#duration').value }) });
+    $('#new-key').hidden = false;
+    $('#new-key-value').textContent = data.license.key;
+    $('#key-expiry').textContent = `Validade: ${data.license.duration_label}. A contagem começa no primeiro uso.`;
+    $('#manager-msg').textContent = 'Licença criada. Copie e guarde a chave agora.';
+    $('#manager-msg').className = 'message success';
+    loadLicenses();
+  } catch (error) {
+    $('#manager-msg').textContent = error.message;
+    $('#manager-msg').className = 'message error';
+  }
+});
+$('#copy-key').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText($('#new-key-value').textContent);
+    $('#copy-key').textContent = 'Copiada!';
+  } catch {
+    $('#manager-msg').textContent = 'Não foi possível copiar automaticamente. Selecione e copie a chave.';
+    $('#manager-msg').className = 'message error';
+  }
+});
+$('#refresh').addEventListener('click', loadLicenses);
+$('#logout').addEventListener('click', async () => {
+  try { await api('/api/admin/logout', { method: 'POST' }); } finally { location.reload(); }
+});
+$('#licenses').addEventListener('click', async event => {
+  const button = event.target.closest('[data-revoke]');
+  if (!button) return;
+  if (!confirm('Revogar esta licença? O acesso será bloqueado imediatamente.')) return;
+  try {
+    await api(`/api/admin/licenses/${button.dataset.revoke}/revoke`, { method: 'POST' });
+    loadLicenses();
+  } catch (error) {
+    $('#manager-msg').textContent = error.message;
+    $('#manager-msg').className = 'message error';
+  }
+});
+</script>
+</body>
+</html>

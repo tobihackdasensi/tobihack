@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tobi Hack — Login</title>
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<main class="shell">
+  <a class="brand" href="/"><span class="mark">T</span><span>TOBI <b>HACK</b></span></a>
+  <section class="panel">
+    <div class="eyebrow">ÁREA DE MEMBROS</div>
+    <h1>Acesse o painel</h1>
+    <p class="muted">Insira sua chave de licença para continuar.</p>
+    <form id="login-form">
+      <label for="license-key">Chave de acesso</label>
+      <input id="license-key" autocomplete="off" placeholder="TOBI-XXXX-XXXX-XXXX" required>
+      <button id="login-btn" type="submit">Entrar no painel <span>↗</span></button>
+      <p class="message" id="message" role="status"></p>
+    </form>
+    <div class="foot">A contagem começa no primeiro uso da chave.</div>
+  </section>
+  <a class="admin-link" href="/admin">Área administrativa</a>
+</main>
+<script>
+document.querySelector('#login-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  const message = document.querySelector('#message');
+  const button = document.querySelector('#login-btn');
+  button.disabled = true;
+  message.textContent = 'Validando chave…';
+  message.className = 'message';
+  try {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: document.querySelector('#license-key').value.trim() })
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Não foi possível entrar.');
+    location.href = '/painel';
+  } catch (error) {
+    message.textContent = error.message;
+    message.className = 'message error';
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
